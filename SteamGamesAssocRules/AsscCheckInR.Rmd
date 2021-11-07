@@ -1,0 +1,35 @@
+---
+title: "AsscCheck"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r cars}
+STEAM <- read.csv("steam-200k.csv",header = FALSE)
+head(STEAM)
+colnames(STEAM)[1]<-"ID"
+colnames(STEAM)[2]<-"Game"
+
+write.csv(STEAM,"steamplayed.csv", row.names = FALSE)
+library(arules)
+G2 <- read.transactions("steamplayed.csv", format = "single", sep = ",", cols = 1:2)
+inspect( head(G2,3) )
+itemFrequency(G2)[ grep(c("Fallout 4"),itemLabels(G2)) ]
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
